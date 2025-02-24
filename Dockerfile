@@ -1,14 +1,13 @@
 FROM node:21.6.1-bookworm-slim
 
 ARG DEBIAN_FRONTEND=noninteractive \
-    ARCH=arm64 \
     ANSIBLE_VERSION=9.2.0 \
     ARGOCD_VERSION=2.9.6 \
     HELM_VERSION=3.14.0 \
     HVAC_VERSION=2.1.0 \
     J2CLI_VERSION=0.3.10 \
     KUBECTL_VERSION=1.29.1 \
-    TERRAFORM_VERSION=1.7.2 \
+    TERRAFORM_VERSION=1.9.0 \
     YQ_VERSION=4.40.5
 
 ENV PATH="/opt/venv/bin:$PATH"
