@@ -1,0 +1,34 @@
+name: Build and push images
+on:
+  push:
+    tags: ['*']
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+      
+      - name: Set up Docker BuildX
+        uses: docker/setup-buildx-action@v3
+
+      - name: Set branch name
+        run: |
+          echo "GIT_TAG=${{ github.ref_name }}" >> $GITHUB_ENV
+
+      - name: Login to GitHub Container Registry
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u $GITHUB_ACTOR --password-stdin
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          platforms: linux/arm64,linux/amd64
+          context: .
+          file: Dockerfile
+          push: true
+          tags: "ghcr.io/${{ github.actor }}/toolbox:${{ env.GIT_TAG }}"
+          build-args: |
