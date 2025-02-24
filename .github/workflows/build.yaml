@@ -31,4 +31,3 @@ jobs:
           file: Dockerfile
           push: true
           tags: "ghcr.io/${{ github.actor }}/toolbox:${{ env.GIT_TAG }}"
-          build-args: |
